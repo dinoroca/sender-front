@@ -1,6 +1,9 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.url_back;
 
 @Injectable({ providedIn: 'root' })
 export class UploadService {
@@ -17,7 +20,7 @@ export class UploadService {
     this.error.set(null);
 
     return this.http
-      .post<{ imageId: string }>('http://localhost:3000/upload', formData)
+      .post<{ imageId: string }>(`${BACKEND_URL}/upload`, formData)
       .pipe(
         tap({
           next: () => this.loading.set(false),

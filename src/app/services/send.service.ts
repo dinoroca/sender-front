@@ -1,6 +1,9 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.url_back;
 
 export interface SendPayload {
   withImage: boolean;
@@ -33,7 +36,7 @@ export class SendService {
     this.error.set(null);
 
     return this.http
-      .post<SendResponse>('http://localhost:3000/send', payload)
+      .post<SendResponse>(`${BACKEND_URL}/send`, payload)
       .pipe(
         tap({
           next: () => this.loading.set(false),
